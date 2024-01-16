@@ -1,0 +1,71 @@
+<!-- views/set.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lego Collection</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+
+      let res = await fetch("https://quotable.io/random");
+      let data = await res.json();
+
+      document.getElementById("quote").innerHTML = `"${data.content}"<br />- <em>${data.author}</em>`;
+    });
+  </script>
+
+</head>
+
+<body tabindex="-1">
+
+  <%- include('partials/navbar', {page: ''}) %>
+
+  <div class="container mx-auto p-4">
+
+    <div class="hero bg-base-200 rounded-lg p-6">
+      <div class="hero-content text-center ">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold"><%= set.name %></h1>
+
+          <p class="py-6">Below, you will find detailed information about the set: <%= set.name %></p>
+
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <img class="w-full rounded-lg"
+          src="<%= set.img_url %>"
+          alt=" Set Image" />
+      </div>
+
+      <div class="prose">
+        <p>
+          <span class="font-bold">Set Name: </span> <%= set.name %> <br />
+          <span class="font-bold">Year Released: </span> <%= set.year %> <br />
+          <span class="font-bold">Theme: </span> <%= set.theme.name %> <br />
+          <span class="font-bold">Number of Parts: </span> <%= set.num_parts %> <br /><br />
+
+          <span id="quote"></span>
+          <br /><br />
+          <div class="flex space-x-4">
+            <% if(session.user) { %>
+            <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-primary btn-sm">Edit</a>
+            <% } %>
+            <a class="btn btn-primary btn-sm" href="#" onclick="history.back(); return false;">RETURN</a>
+          </div>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

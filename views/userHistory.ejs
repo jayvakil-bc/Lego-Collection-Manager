@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lego Collection</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    .max-w-md {
+      max-width: 600px;
+    }
+
+    .user-history-table {
+      width: 100%;
+      border-collapse: collapse;
+
+    }
+
+    .user-history-table th, .user-history-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+  </style>
+
+</head>
+
+<body tabindex="-1">
+
+  <%- include('partials/navbar', { page: '/lego/sets' }) %>
+
+  <div class="container mx-auto p-4">
+
+    <div class="hero bg-base-200 rounded-lg p-6">
+      <div class="hero-content text-center ">
+        <div class="max-w-md">
+          <% if (session.user) { %>
+            <h1 class="text-5xl font-bold"><%= session.user.userName %></h1>
+            <p class="py-6">User History:<%= session.user.email %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <% if (session.user && session.user.loginHistory && session.user.loginHistory.length > 0) { %>
+      <div class="max-w-md mx-auto">
+        <table class="user-history-table">
+          <thead>
+            <tr>
+              <th>Login Date/Time</th>
+              <th>Client Information</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% session.user.loginHistory.forEach((login) => { %>
+              <tr>
+                <td><%= login.dateTime %></td>
+                <td><%= login.userAgent %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <p>No login history available.</p>
+    <% } %>
+
+  </div>
+</body>
+
+</html>

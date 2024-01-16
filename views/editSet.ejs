@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Set</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <style>
+    .bright-green-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .bright-green-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body tabindex="-1">
+
+  <%- include('partials/navbar', { page: '/lego/addSet' }) %>
+
+  <div class="container mx-auto p-4">
+
+    <div class="hero bg-base-200 rounded-lg p-6">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Edit Set</h1>
+          <h2><%= set.name %></h2>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <form action="/lego/editSet" method="POST" class="container">
+      <div class="form-row">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required value="<%= set.name %>">
+        
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year" required value="<%= set.year %>">
+      </div>
+
+      <div class="form-row">
+        <label for="img_url">Image URL:</label>
+        <input type="url" id="img_url" name="img_url" required value="<%= set.img_url %>">
+
+        <label for="theme_id">Theme:</label>
+        <select id="theme_id" name="theme_id" required>
+          <% themes.forEach(theme => { %>
+          <option <%= (set.theme_id == theme.id) ? "selected" : "" %> value="<%= theme.id %>"><%= theme.name %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label for="num_parts">Number of Parts:</label>
+        <input type="number" id="num_parts" name="num_parts" required value="<%= set.num_parts %>">
+      </div>
+
+      <!-- Set_num text field set to readonly -->
+      <div class="form-row">
+        <label for="set_num">Set Number:</label>
+        <input type="text" id="set_num" name="set_num" required value="<%= set.set_num %>" readonly class="cursor-not-allowed">
+      </div>
+
+      <button class="bright-green-button" type="submit">Update Set</button>
+
+      <!-- Inside the form or wherever it makes sense -->
+      <a href="/lego/deleteSet/<%= set.set_num %>" class="bright-green-button">Delete Set</a>
+
+    </form>
+
+  </div>
+
+</body>
+
+</html>

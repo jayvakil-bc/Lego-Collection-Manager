@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lego Collection</title>
+  <link rel="stylesheet" href="/css/main.css" />
+
+</head>
+
+<body tabindex="-1">
+
+  <%- include('partials/navbar', { page: '/lego/sets' }) %>
+
+  <div class="container mx-auto p-4">
+
+    <div class="hero bg-base-200 rounded-lg p-6">
+      <div class="hero-content text-center ">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Collection</h1>
+
+          <p class="py-6">Browse the entire collection. Click the theme to filter by themes such as:
+            <a href="/lego/sets?theme=Technic" class="btn btn-primary btn-xs">Technic</a>
+            <a href="/lego/sets?theme=Classic Town" class="btn btn-primary btn-xs">Classic Town</a>
+            <a href="/lego/sets?theme=Supplemental" class="btn btn-primary btn-xs">Supplemental</a>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="overflow-x-auto overflow-y-hidden">
+      <table class="table table-zebra">
+        <tbody>
+          <% sets.forEach(set => { %>
+            <tr>
+              <td>
+                <div class="avatar">
+                  <div class="w-32 h-32 rounded-lg bg-transparent bg-no-repeat bg-cover " style="background-image: url('<%= set.img_url %>');"></div>
+                </div>
+              </td>
+              <td>
+                <%= set.name %> | <a href="/lego/sets?theme=<%= set.theme.name %>" class="btn mt-2 btn-xs"><%= set.theme.name %></a>
+              </td>
+              <td><span class="font-bold">Year: </span> <%= set.year %> - <span class="font-bold">Parts:</span> <%= set.num_parts %></td>
+              <th>
+                <a href="/lego/sets/<%= set.set_num %>" class="btn btn-xs">details</a>
+              </th>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
